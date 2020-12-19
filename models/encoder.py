@@ -81,16 +81,13 @@ class pBLSTM(torch.nn.Module):
         
         inp_lens /= 2
         input_x = x.contiguous().view(batch_size, time_reduction, hidden_dim*2)
-        #self.pblstm.flatten_parameters()
         
         # Pass through pblstm
         unpacked_out, inp_lens, hidden = self.pblstm(input_x, inp_lens)
-        #print(f"INP_Lens : {inp_lens}")
         return unpacked_out, inp_lens, hidden
        
         
 
-        #raise NotImplementedError
     
 
 
@@ -121,16 +118,12 @@ class Listener(torch.nn.Module):
         :returns torch.Tensor Encoded output
         :returns list Encoded output lengths
         """
-        #print(getattr(self, "%s0" % (self.etype)))
         L_prev, Llens_prev, _ = getattr(self, "%s0" % (self.etype))(x, inp_lens)
-        #print(f"L_prev: {L_prev}")
-        #print(f"Llens_prev: {Llens_prev}")
         for i in range(1, self.elayers+1):
             L_i, Llens_i, _ = getattr(self, "%s%d" % (self.etype, i))(L_prev, Llens_prev)
             L_prev, Llens_prev = L_i, Llens_i
 
         L_prev = getattr(self, "proj%d" % (self.elayers))(L_prev)
-        #print(f"Final Return Size: {L_prev.size()}")
         return L_prev, Llens_prev 
         
         

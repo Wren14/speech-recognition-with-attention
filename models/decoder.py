@@ -139,7 +139,6 @@ class Speller(torch.nn.Module):
             
         logits_list = torch.stack(logits_list, dim=1)
         return logits_list, ys_ref_padded 
-       #raise NotImplementedError
              
 
     def greedy_decode(self,hs:torch.Tensor,hlens:torch.LongTensor,params:configargparse.Namespace):
@@ -149,7 +148,6 @@ class Speller(torch.nn.Module):
         :param list hlens- Lengths of the encoded output sequence without padding
         :param Namespace params- Decoding options
         """
-        #print(f"SOS Token : {self.sos} EOS Token : {self.eos}")
         hidden_state_list = [hs.new_zeros(hs.size(0), self.dunits) for layer in range(self.dlayers)]
         hidden_cell_list = [hs.new_zeros(hs.size(0), self.dunits) for layer in range(self.dlayers)]
         hidden_cell_list_prev = [hs.new_zeros(hs.size(0), self.dunits) for layer in range(self.dlayers)]
@@ -191,4 +189,3 @@ class Speller(torch.nn.Module):
             
 
     
-       #raise NotImplementedError

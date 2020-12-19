@@ -52,7 +52,6 @@ class Attention(torch.nn.Module):
         batch = len(hs)
 
         if self.key is None:
-            #print("Inside keys block")
             self.hs = hs  
             self.hlens = self.hs.size(1)
             ## Project the encoder hidden state to obtain the key vector
@@ -75,8 +74,6 @@ class Attention(torch.nn.Module):
             att_prev = att_prev / att_prev.new(hlens,device=dec_state.device).unsqueeze(-1)
 
         # att_prev: utt x frame -> utt x 1 x 1 x frame -> utt x att_conv_chans x 1 x frame
-        #print(f"HLENS: {self.hlens}")
-        #print(f"Hlens_size: {len(self.hlens)}")
         att_conv = self.loc_conv(att_prev.view(batch, 1, 1, self.hlens))
         # att_conv: utt x att_conv_chans x 1 x frame -> utt x frame x att_conv_chans
         att_conv = att_conv.squeeze(2).transpose(1, 2)
