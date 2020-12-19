@@ -1,8 +1,0 @@
-kaldiio
-torch ==1.6.0
-numpy
-matplotlib
-configargparse
-tensorboard
-editdistance
-PyYAML
